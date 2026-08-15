@@ -81,10 +81,8 @@ Uses **Gemma 3 4B through Ollama** to generate the final itinerary using:
 * Requests
 * OpenStreetMap
 * Overpass API
-
 ```
 ```
-
 ## 🔮 Future Improvements
 
 * Hotel and flight API integration
