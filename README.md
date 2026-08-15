@@ -71,6 +71,8 @@ Uses **Gemma 3 4B through Ollama** to generate the final itinerary using:
 * Weather
 * Available places
 
+The LLM is responsible for travel planning and itinerary generation, while budget calculations are handled by Python.
+
 ## 🛠️ Tech Stack
 
 * Python
@@ -81,8 +83,7 @@ Uses **Gemma 3 4B through Ollama** to generate the final itinerary using:
 * Requests
 * OpenStreetMap
 * Overpass API
-```
-```
+
 ## 🔮 Future Improvements
 
 * Hotel and flight API integration
