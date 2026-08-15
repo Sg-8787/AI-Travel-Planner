@@ -83,6 +83,7 @@ Uses **Gemma 3 4B through Ollama** to generate the final itinerary using:
 * Overpass API
 
 ```
+```
 
 ## 🔮 Future Improvements
 
