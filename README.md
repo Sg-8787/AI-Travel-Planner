@@ -84,6 +84,15 @@ The LLM is responsible for travel planning and itinerary generation, while budge
 * OpenStreetMap
 * Overpass API
 
+## Example Input
+Destination: Manali
+Days: 5
+People: 2
+Budget: ₹20,000
+Interests: nature, food, photography
+
+The application generates a personalized day-by-day itinerary based on the destination, weather, available places, budget and user's interests.
+
 ## 🔮 Future Improvements
 
 * Hotel and flight API integration
