@@ -60,7 +60,7 @@ The agent uses:
 * **Overpass API** — to search for nearby hotels
 
 The hotel search uses a radius around the selected destination and returns available hotel names mapped in OpenStreetMap.
-Hotel availability and prices are not real-time.
+   Hotel availability and prices are not real-time.
 
 ### 💰 Budget Agent
 
