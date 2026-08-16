@@ -1,3 +1,4 @@
+
 import streamlit as st
 from travel_graph import travel_graph
 
@@ -9,7 +10,7 @@ st.set_page_config(
 )
 
 st.title("✈️ AI Travel Planner")
-st.write("Plan your trip using LLM + LangGraph + Weather + Places + Budget")
+st.write("Plan your trip using LLM + LangGraph + Weather + Places + Hotel + Budget")
 
 
 # User inputs
@@ -64,6 +65,7 @@ if st.button("🚀 Generate Travel Plan"):
         "interests": interests,
         "weather": "",
         "places": "",
+        "hotel": "",
         "budget_plan": "",
         "result": ""
     }
@@ -85,6 +87,17 @@ if st.button("🚀 Generate Travel Plan"):
     st.write(result["places"])
 
 
+    # Hotels
+    st.subheader("🏨 Hotels")
+
+    hotels = result.get("hotel", "")
+
+    if hotels:
+        st.write(hotels)
+    else:
+        st.write("No hotels found.")
+
+
     # Budget
     st.subheader("💰 Budget Analysis")
     st.write(result["budget_plan"])
@@ -93,3 +106,4 @@ if st.button("🚀 Generate Travel Plan"):
     # Final itinerary
     st.subheader("🗓️ Final Travel Itinerary")
     st.write(result["result"])
+
