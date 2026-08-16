@@ -4,11 +4,9 @@ from langgraph.graph import StateGraph, START, END
 
 from weather_tool import get_weather
 from places_tool import get_places
-
-
+from hotel_tool import get_hotels
 
 # STATE
-
 
 class TravelState(TypedDict):
     destination: str
@@ -18,6 +16,7 @@ class TravelState(TypedDict):
     interests: str
     weather: str
     places: str
+    hotel: str
     budget_plan: str
     result: str
 
@@ -46,7 +45,21 @@ def places_agent(state: TravelState):
         "places": str(places)
     }
 
+def hotel_agent(state: TravelState):
 
+    hotels = get_hotels(state["destination"])
+
+    print("\n🏨 AVAILABLE HOTELS:")
+
+    if hotels:
+        for i, hotel in enumerate(hotels, 1):
+            print(f"{i}. {hotel}")
+    else:
+        print("No hotels found.")
+
+    return {
+        "hotel": str(hotels)
+    }
 
 # BUDGET AGENT
 
@@ -200,48 +213,16 @@ Return ONLY the final itinerary.
 
 graph = StateGraph(TravelState)
 
+graph.add_node("weather", weather_agent)
+graph.add_node("places", places_agent)
+graph.add_node("hotel", hotel_agent)
+graph.add_node("budget", budget_agent)
+graph.add_node("decision", decision_agent)
 
-# Nodes
-graph.add_node(
-    "weather",
-    weather_agent
-)
-
-graph.add_node(
-    "places",
-    places_agent
-)
-
-graph.add_node(
-    "budget",
-    budget_agent
-)
-
-graph.add_node(
-    "decision",
-    decision_agent
-)
-
-
-# Flow
-
-graph.add_edge(
-    START,
-    "weather"
-)
-
-graph.add_edge(
-    "weather",
-    "places"
-)
-
-graph.add_edge(
-    "places",
-    "budget"
-)
-
-
-# Weather-based routing
+graph.add_edge(START, "weather")
+graph.add_edge("weather", "places")
+graph.add_edge("places", "hotel")
+graph.add_edge("hotel", "budget")
 
 graph.add_conditional_edges(
     "budget",
@@ -252,14 +233,6 @@ graph.add_conditional_edges(
     }
 )
 
+graph.add_edge("decision", END)
 
-# Final
-
-graph.add_edge(
-    "decision",
-    END
-)
-
-
-# Compile
 travel_graph = graph.compile()
