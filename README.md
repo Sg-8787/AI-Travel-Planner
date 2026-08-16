@@ -7,6 +7,7 @@ An AI-powered travel planning application that generates personalized, weather-a
 * 🌍 Single-destination travel planning
 * 🌦️ Fetches weather information
 * 📍 Finds nearby tourist attractions and museums
+* 🏨 Finds nearby hotels for the selected destination
 * 💰 Generates an estimated trip budget
 * 🧠 Uses **Ollama + Gemma 3 4B** for itinerary generation
 * 🔀 Uses LangGraph for agent workflow
@@ -26,11 +27,15 @@ Weather Agent
     ↓
 Places Agent
     ↓
+Hotel Agent
+    ↓
 Budget Agent
     ↓
 Weather Router
     ↓
 Decision Agent
+    ↓
+Ollama + Gemma 3 4B
     ↓
 Final Travel Itinerary
 ```
@@ -39,15 +44,28 @@ Final Travel Itinerary
 
 ### 🌦️ Weather Agent
 
-Fetches weather information for the selected destination.
+Fetches weather information for the selected destination using a weather API.
 
 ### 📍 Places Agent
 
-Uses **OpenStreetMap/Overpass API** to find nearby attractions and museums.
+Uses **OpenStreetMap/Overpass API** to find nearby tourist attractions, museums and other points of interest.
+
+### 🏨 Hotel Agent
+
+Finds hotels near the selected destination using **OpenStreetMap**.
+
+The agent uses:
+
+* **Nominatim API** — to find the destination's latitude and longitude
+* **Overpass API** — to search for nearby hotels
+
+The hotel search uses a radius around the selected destination and returns available hotel names mapped in OpenStreetMap.
+
+> Hotel availability and prices are not real-time.
 
 ### 💰 Budget Agent
 
-Creates an estimated budget allocation:
+The Budget Agent uses **Python-based calculations** to divide the user's total budget into estimated categories:
 
 * Hotel — 35%
 * Food — 25%
@@ -55,23 +73,28 @@ Creates an estimated budget allocation:
 * Activities — 10%
 * Miscellaneous — 10%
 
+The total allocation equals the user's entered budget.
+
 ### 🔀 Weather Router
 
-Checks the weather and determines whether the itinerary should prefer indoor or outdoor activities.
+Checks the weather conditions and determines whether the itinerary should focus on indoor or outdoor activities.
 
 ### 🧠 Decision Agent
 
-Uses **Gemma 3 4B through Ollama** to generate the final itinerary using:
+Uses **Ollama + Gemma 3 4B** to generate the final personalized day-by-day itinerary.
+
+The Decision Agent considers:
 
 * Destination
 * Number of days
 * Number of people
-* Budget
-* Interests
+* Budget allocation
+* User interests
 * Weather
 * Available places
+* Available hotels
 
-The LLM is responsible for travel planning and itinerary generation, while budget calculations are handled by Python.
+The LLM is responsible for **travel planning and itinerary generation**, while budget calculations are handled by Python.
 
 ## 🛠️ Tech Stack
 
@@ -79,34 +102,19 @@ The LLM is responsible for travel planning and itinerary generation, while budge
 * Streamlit
 * LangGraph
 * Ollama
-* Gemma 3 4B
-* Requests
 * OpenStreetMap
+* Nominatim API
 * Overpass API
 
-## 🧪Example Input
-Destination: Manali
+## 🔮Future Improvements
 
-Days: 5
-
-People: 2
-
-Budget: ₹20,000
-
-Interests: nature, food, photography
-
-The application generates a personalized day-by-day itinerary based on the destination, weather, available places, budget and user's interests.
-
-## 🔮 Future Improvements
-
-* Hotel and flight API integration
-* Live travel costs
-* Distance and route optimization
-* Google Maps integration
-* Multiple destination support
-* Automatic budget verification
-* PDF itinerary export
-* User authentication
-* Saved travel plans
-
+* ✈️ Flight API integration
+* 💵 Live hotel and flight prices
+* 🗺️ Distance and route optimization
+* 📍 Google Maps integration
+* 🌍 Multiple destination support
+* 📊 Automatic budget verification
+* 📄 PDF itinerary export
+* 🔐 User authentication
+* 💾 Saved travel plans
 
